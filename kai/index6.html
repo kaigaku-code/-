@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="anguard" content="width=device-width, initial-scale=1.0">
+    <title>Выбор церемонии — Вечное Прощание</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriola:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gabriola', cursive;
+            color: #f0f0f0;
+            background: linear-gradient(135deg, #461010 30%, #000000 70%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 40px;
+        }
+
+        h1 {
+            font-size: 56px;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 28px;
+            line-height: 1.6;
+            color: #e0d0d0;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .ceremonies {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1600px;
+            margin: 0 auto 60px;
+        }
+
+        .ceremony {
+            background: rgba(30, 15, 15, 0.75);
+            border: 2px solid #8B0000;
+            width: 400px;
+            padding: 22px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            /* --- ВЫРАВНИВАНИЕ КНОПОК --- */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 470px;
+        }
+
+        .ceremony:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.45);
+            z-index: 10;
+            background: rgba(40, 20, 20, 0.9);
+        }
+
+        .ceremony::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(139, 0, 0, 0.25), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .ceremony:hover::before {
+            opacity: 1;
+        }
+
+        .ceremony img {
+            width: 350px;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            filter: grayscale(15%) brightness(0.95);
+            transition: filter 0.3s;
+        }
+
+        .ceremony:hover img {
+            filter: grayscale(0%) brightness(1.1);
+        }
+
+        .ceremony h2 {
+            font-size: 32px;
+            margin: 14px 0 10px;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.5);
+        }
+
+        .ceremony .faith {
+            font-size: 22px;
+            color: #ffb347;
+            font-style: italic;
+            margin-bottom: 12px;
+            text-shadow: 0 0 5px rgba(255, 179, 71, 0.4);
+        }
+
+        .ceremony p {
+            font-size: 20px;
+            color: #d0c0c0;
+            margin-bottom: 18px;
+            line-height: 1.45;
+            flex-grow: 1;
+        }
+
+        .select-btn {
+            background: #8B0000;
+            color: white;
+            border: 1px solid #fff;
+            padding: 10px 0;
+            font-family: 'Gabriola', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .select-btn:hover {
+            background: #a50000;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 179, 71, 0.5);
+        }
+
+        .wilted-flower {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: 9999;
+            animation: wiltedFall 6s ease-in forwards;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.7);
+        }
+
+        @keyframes wiltedFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(500px) rotate(25deg) scale(0.85);
+                opacity: 0;
+            }
+        }
+
+        .wandering-ghost {
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-size: 32px;
+            opacity: 0;
+            color: rgba(253, 194, 0, 0.6);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+            pointer-events: none;
+            user-select: none;
+            z-index: 1000;
+            animation: ghostDrift var(--duration) linear forwards;
+        }
+
+        @keyframes ghostDrift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        .site-article {
+            margin: 60px auto 60px;
+            max-width: 1500px;
+            padding: 30px;
+            background: rgba(15, 15, 15, 0.6);
+            border-top: 1px solid #8B0000;
+            border-bottom: 1px solid #8B0000;
+            font-size: 36px;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+        }
+
+        .site-article h2 {
+            color: #dd3a3a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 41px;
+            font-family: 'Gabriola', cursive;
+        }
+
+        .site-article p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🕯️ Выбор церемонии</h1>
+    </header>
+
+    <div class="intro">
+        <p>Вы можете выбрать ту традицию, которой следовали при жизни — без стеснения и с глубоким уважением.</p>
+    </div>
+
+    <div class="ceremonies">
+        <!-- Христианская -->
+        <div class="ceremony">
+            <img src="https://avatars.mds.yandex.net/i?id=9c586d2c6039fe1208ab54f68cc95032ef1a0d96-8483391-images-thumbs&n=13" alt="Христианская погребальная церемония">
+            <h2>Христианская</h2>
+            <div class="faith">Католическая / Православная / Протестантская</div>
+            <p>Включает чтение Священного Писания, гимны, прощальную речь и обряд захоронения или кремации в соответствии с конфессией.</p>
+            <button class="select-btn" onclick="alert('Выбрана христианская церемония')">Выбрать</button>
+        </div>
+
+        <!-- Исламская -->
+        <div class="ceremony">
+            <img src="https://avatars.mds.yandex.net/i?id=89614ecf924549ade1f5f057da943386f423faa4-9748111-images-thumbs&n=13" alt="Исламская погребальная церемония">
+            <h2>Исламская</h2>
+            <div class="faith">Суннитские / Шиитские традиции</div>
+            <p>Ритуальное омовение (гусль), заворачивание в саван, молитва джаназа и захоронение в течение 24 часов согласно исламскому закону.</p>
+            <button class="select-btn" onclick="alert('Выбрана исламская церемония')">Выбрать</button>
+        </div>
+
+        <!-- Нерелигиозная -->
+        <div class="ceremony">
+            <img src="https://avatars.mds.yandex.net/i?id=b0fbcbc3466ac3c89275a141cc9812d7a92d4965-9181148-images-thumbs&n=13" alt="Нерелигиозная церемония">
+            <h2>Нерелигиозная</h2>
+            <div class="faith">Светская / Гуманистическая / Индивидуальная</div>
+            <p>Значимое прощание с музыкой, поэзией, воспоминаниями и без религиозных элементов.</p>
+            <button class="select-btn" onclick="alert('Выбрана нерелигиозная церемония')">Выбрать</button>
+        </div>
+
+        <!-- Иудейская -->
+        <div class="ceremony">
+            <img src="https://avatars.mds.yandex.net/i?id=c3b643950641df9599586cf470741467_l-10695851-images-thumbs&n=13" alt="Иудейская погребальная церемония">
+            <h2>Иудейская</h2>
+            <div class="faith">Ортодоксальная / Реформистская</div>
+            <p>Церемония включает чтение Танаха, обряд тахриха (одевание в саван), захоронение в день смерти и поминальные молитвы.</p>
+            <button class="select-btn" onclick="alert('Выбрана иудейская церемония')">Выбрать</button>
+        </div>
+
+        <!-- Буддийская -->
+        <div class="ceremony">
+            <img src="https://i.pinimg.com/736x/3d/eb/19/3deb19857758081c1ecf7950a665896f.jpg" alt="Буддийская погребальная церемония">
+            <h2>Буддийская</h2>
+            <div class="faith">Тхеравада / Махаяна</div>
+            <p>Молитвы монахов, медитация, чтение сутр и ритуалы, направленные на благоприятное перерождение души усопшего.</p>
+            <button class="select-btn" onclick="alert('Выбрана буддийская церемония')">Выбрать</button>
+        </div>
+
+        <!-- Славянская -->
+        <div class="ceremony">
+            <img src="https://static.vecteezy.com/system/resources/previews/005/199/450/large_2x/slavic-slavonis-symbol-kolovrat-sign-sun-icon-black-color-illustration-flat-style-simple-image-vector.jpg" alt="Традиционная славянская церемония">
+            <h2>Славянская</h2>
+            <div class="faith">Дохристианские / Народные обычаи</div>
+            <p>Обряды с поминальной трапезой, ритуальной едой, песнями и символическими подношениями природе и предкам.</p>
+            <button class="select-btn" onclick="alert('Выбрана славянская церемония')">Выбрать</button>
+        </div>
+    </div>
+
+    <div class="site-article">
+        <h2>О ритуале прощания</h2>
+        <p>
+            Церемония — не формальность, а мост между мирами. Мы не навязываем шаблоны, а воссоздаём то, что было важно для ушедшего.
+        </p>
+        <p>
+            От православного отпевания до славянского поминального огня — каждая деталь выполняется с точностью и уважением. Даже если вы не уверены в выборе, мы поможем найти путь, достойный памяти.
+        </p>
+        <p>
+            Все обряды проводят специалисты, знакомые с традициями: священники, имамы, раввины, монахи или опытные ведущие светских прощаний.
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('click', function(e) {
+            const flower = document.createElement('div');
+            flower.className = 'wilted-flower';
+            flower.innerHTML = '🥀';
+            flower.style.left = (e.pageX - 14) + 'px';
+            flower.style.top = (e.pageY - 14) + 'px';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 6000);
+        });
+    </script>
+
+    <script>
+        function spawnGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'wandering-ghost';
+            ghost.innerHTML = '🏮';
+
+            const side = Math.floor(Math.random() * 4);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            let startX, startY;
+
+            switch (side) {
+                case 0: startX = Math.random() * w; startY = -60; break;
+                case 1: startX = w + 60; startY = Math.random() * h; break;
+                case 2: startX = Math.random() * w; startY = h + 60; break;
+                case 3: startX = -60; startY = Math.random() * h; break;
+            }
+
+            ghost.style.left = `${startX}px`;
+            ghost.style.top = `${startY}px`;
+
+            const endX = (Math.random() - 0.5) * w * 2.5;
+            const endY = (Math.random() - 0.5) * h * 2.5;
+
+            ghost.style.setProperty('--tx', `${endX - startX}px`);
+            ghost.style.setProperty('--ty', `${endY - startY}px`);
+
+            const duration = 18 + Math.random() * 22;
+            ghost.style.setProperty('--duration', `${duration}s`);
+
+            document.body.appendChild(ghost);
+            setTimeout(() => ghost.remove(), duration * 1000);
+        }
+
+        setInterval(spawnGhost, 2500 + Math.random() * 2500);
+    </script>
+
+    <audio id="funeralMusic" preload="auto">
+        <source src="SHopen_-_Pokhoronnyjj_marsh_10529.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('funeralMusic');
+            audio.volume = 0.45;
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play().catch(() => {}), { once: true });
+            });
+        });
+    </script>
+
+</body>
+</html>

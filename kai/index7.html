@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощь по документам — Вечное Прощание</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriola:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gabriola', cursive;
+            color: #f0f0f0;
+            background: linear-gradient(135deg, #461010 30%, #000000 70%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 40px;
+        }
+
+        h1 {
+            font-size: 56px;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 28px;
+            line-height: 1.6;
+            color: #e0d0d0;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+            font-style: italic;
+        }
+
+        .article {
+            max-width: 1500px;
+            margin: 0 auto 60px;
+            padding: 30px;
+            background: rgba(15, 15, 15, 0.6);
+            border-top: 1px solid #8B0000;
+            border-bottom: 1px solid #8B0000;
+            font-size: 36px;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+        }
+
+        .article h2 {
+            color: #dd3a3a;
+            text-align: left;
+            margin: 30px 0 20px;
+            font-size: 41px;
+            font-family: 'Gabriola', cursive;
+        }
+
+        .article p {
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        .article img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            background: rgba(30, 20, 20, 0.5);
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .article ul {
+            margin: 25px 0 30px 50px;
+            padding-left: 10px;
+            font-size: 36px;
+        }
+
+        .article li {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .article li::before {
+            content: "•";
+            color: #dd3a3a;
+            font-size: 48px;
+            position: absolute;
+            left: -45px;
+            top: -8px;
+        }
+
+        .article p:last-child {
+            text-align: center;
+            font-style: italic;
+            color: #dd3a3a;
+            margin-top: 40px;
+            font-size: 38px;
+        }
+
+        /* Увядающая роза */
+        .wilted-flower {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: 9999;
+            animation: wiltedFall 6s ease-in forwards;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.7);
+        }
+
+        @keyframes wiltedFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(500px) rotate(25deg) scale(0.85);
+                opacity: 0;
+            }
+        }
+
+        .wandering-ghost {
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-size: 32px;
+            opacity: 0;
+            color: rgba(253, 194, 0, 0.6);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+            pointer-events: none;
+            user-select: none;
+            z-index: 1000;
+            animation: ghostDrift var(--duration) linear forwards;
+        }
+
+        @keyframes ghostDrift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📄 Помощь по документам</h1>
+    </header>
+
+    <div class="intro">
+        <p>Мы возьмём на себя бумаги — чтобы вы могли плакать, помнить и прощаться.</p>
+    </div>
+
+    <div class="article">
+        <p>
+            После ухода близкого человека нужно оформить множество документов. Это тяжело морально, особенно когда не знаешь, с чего начать. Мы собрали основные шаги, чтобы вы не заблудились среди форм и печатей.
+        </p>
+
+        <h2>Что нужно оформить в первую очередь?</h2>
+
+        <ul>
+            <li>Свидетельство о смерти (выдаётся в ЗАГСе)</li>
+            <li>Справка о смерти по форме №33 (для пенсии и пособий)</li>
+            <li>Справка из морга (форма №106/у-08)</li>
+            <li>Разрешение на захоронение</li>
+        </ul>
+
+        <img src="https://ritualkrasnoznamensk.ru/wp-content/uploads/2025/04/2025-04-17_18-16-46.png" 
+             alt="Документы для оформления похорон">
+
+        <p>
+            Чтобы получить эти бумаги, понадобятся:
+        </p>
+        <ul>
+            <li>Паспорт умершего</li>
+            <li>Ваш паспорт (как заявителя)</li>
+            <li>Медицинское свидетельство о смерти</li>
+            <li>Пенсионное удостоверение (если есть)</li>
+        </ul>
+
+        <h2>Где подавать документы?</h2>
+        <p>
+            Всё можно оформить в МФЦ или напрямую в ЗАГСе по месту смерти или регистрации умершего. Мы можем приехать с вами или сделать всё сами — просто скажите.
+        </p>
+
+        <p>
+            Также помогаем с:
+        </p>
+        <ul>
+            <li>Оформлением пособия на погребение</li>
+            <li>Закрытием банковских счетов</li>
+            <li>Переоформлением недвижимости</li>
+            <li>Услуги юриста</li>
+        </ul>
+
+        <p>Не оставайтесь один на один с бюрократией. Мы рядом.</p>
+    </div>
+
+    <!-- Увядающие розы -->
+    <script>
+        document.addEventListener('click', function(e) {
+            const flower = document.createElement('div');
+            flower.className = 'wilted-flower';
+            flower.innerHTML = '🥀';
+            flower.style.left = (e.pageX - 14) + 'px';
+            flower.style.top = (e.pageY - 14) + 'px';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 6000);
+        });
+    </script>
+
+    <script>
+        function spawnGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'wandering-ghost';
+            ghost.innerHTML = '🏮';
+
+            const side = Math.floor(Math.random() * 4);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            let startX, startY;
+
+            switch (side) {
+                case 0: startX = Math.random() * w; startY = -60; break;
+                case 1: startX = w + 60; startY = Math.random() * h; break;
+                case 2: startX = Math.random() * w; startY = h + 60; break;
+                case 3: startX = -60; startY = Math.random() * h; break;
+            }
+
+            ghost.style.left = `${startX}px`;
+            ghost.style.top = `${startY}px`;
+
+            const endX = (Math.random() - 0.5) * w * 2.5;
+            const endY = (Math.random() - 0.5) * h * 2.5;
+
+            ghost.style.setProperty('--tx', `${endX - startX}px`);
+            ghost.style.setProperty('--ty', `${endY - startY}px`);
+
+            const duration = 18 + Math.random() * 22;
+            ghost.style.setProperty('--duration', `${duration}s`);
+
+            document.body.appendChild(ghost);
+            setTimeout(() => ghost.remove(), duration * 1000);
+        }
+
+        setInterval(spawnGhost, 2500 + Math.random() * 2500);
+    </script>
+
+    <!-- Музыка -->
+    <audio id="funeralMusic" preload="auto">
+        <source src="SHopen_-_Pokhoronnyjj_marsh_10529.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('funeralMusic');
+            audio.volume = 0.45;
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play().catch(() => {}), { once: true });
+            });
+        });
+    </script>
+
+</body>
+</html>

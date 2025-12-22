@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор бюджета — Вечное Прощание</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriola:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gabriola', cursive;
+            color: #f0f0f0;
+            background: linear-gradient(135deg, #1a0a0a 30%, #000000 70%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 40px;
+        }
+
+        h1 {
+            font-size: 56px;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 28px;
+            line-height: 1.6;
+            color: #e0d0d0;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .plans {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1600px;
+            margin: 0 auto 10px;
+        }
+
+        .plan {
+            background: rgba(30, 20, 20, 0.7);
+            border: 2px solid #8B0000;
+            width: 400px;
+            padding: 20px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 470px;
+        }
+
+        .plan:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.4);
+            z-index: 10;
+            background: rgba(40, 25, 25, 0.85);
+        }
+
+        .plan::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .plan:hover::before {
+            opacity: 1;
+        }
+
+        .plan img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 18px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            filter: grayscale(30%) brightness(0.9);
+            transition: filter 0.3s;
+        }
+
+        .plan:hover img {
+            filter: grayscale(0%) brightness(1.1);
+        }
+
+        .plan h2 {
+            font-size: 32px;
+            margin: 14px 0 10px;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.5);
+        }
+
+        .plan .price {
+            font-size: 26px;
+            color: #ffb347;
+            font-weight: bold;
+            margin-bottom: 14px;
+            text-shadow: 0 0 8px rgba(255, 179, 71, 0.4);
+        }
+
+        .plan p {
+            font-size: 20px;
+            color: #d0c0c0;
+            margin-bottom: 20px;
+            line-height: 1.45;
+            flex-grow: 1;
+        }
+
+        .select-btn {
+            background: #8B0000;
+            color: white;
+            border: 1px solid #fff;
+            padding: 10px 0;
+            font-family: 'Gabriola', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .select-btn:hover {
+            background: #a50000;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 179, 71, 0.5);
+        }
+
+        .wilted-flower {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: 9999;
+            animation: wiltedFall 6s ease-in forwards;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.7);
+        }
+
+        @keyframes wiltedFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(500px) rotate(25deg) scale(0.85);
+                opacity: 0;
+            }
+        }
+
+        .wandering-ghost {
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-size: 32px;
+            opacity: 0;
+            color: rgba(253, 194, 0, 0.6);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+            pointer-events: none;
+            user-select: none;
+            z-index: 1000;
+            animation: ghostDrift var(--duration) linear forwards;
+        }
+
+        @keyframes ghostDrift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        .site-article {
+            margin: 80px auto 60px;
+            max-width: 1500px;
+            padding: 30px;
+            background: rgba(15, 15, 15, 0.6);
+            border-top: 1px solid #8B0000;
+            border-bottom: 1px solid #8B0000;
+            font-size: 36px;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+        }
+
+        .site-article h2 {
+            color: #dd3a3a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 41px;
+            font-family: 'Gabriola', cursive;
+        }
+
+        .site-article p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🥀 Выбор бюджета</h1>
+    </header>
+
+    <div class="intro">
+        <p>Выберите пакет услуг, соответствующий вашим пожеланиям и памяти ушедшего.</p>
+    </div>
+
+    <div class="plans">
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/i?id=ea0bd126a764ba98f09c6c849bfce669_l-10356912-images-thumbs&n=13" alt="Эконом пакет">
+            <h2>Эконом</h2>
+            <div class="price">от 50 000 ₽</div>
+            <p>Кремация без церемонии, базовая урна, оформление документов.</p>
+            <button class="select-btn" onclick="alert('Выбран эконом-пакет')">Выбрать</button>
+        </div>
+
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/i?id=339975c73c6d6cf3de7b06a03643b8a22b61f396-8497831-images-thumbs&n=13" alt="Базовый пакет">
+            <h2>Базовый</h2>
+            <div class="price">от 80 000 ₽</div>
+            <p>Простая церемония, стандартный гроб, транспортировка и документы.</p>
+            <button class="select-btn" onclick="alert('Выбран базовый пакет')">Выбрать</button>
+        </div>
+
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/i?id=89907a2024cc1a4f296c3d13608ca69ee43ad3f0-5879690-images-thumbs&n=13" alt="Стандартный пакет">
+            <h2>Стандарт</h2>
+            <div class="price">от 250 000 ₽</div>
+            <p>Прощание, улучшенный гроб, цветы, программы и поддержка.</p>
+            <button class="select-btn" onclick="alert('Выбран стандартный пакет')">Выбрать</button>
+        </div>
+
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/i?id=618b79980659cdcca3fc8a6f6cff6bf84a20e9af-9042494-images-thumbs&n=13" alt="Эко-пакет">
+            <h2>Эко</h2>
+            <div class="price">от 180 000 ₽</div>
+            <p>Биоразлагаемый гроб, похороны в лесу, без пластика и металла.</p>
+            <button class="select-btn" onclick="alert('Выбран эко-пакет')">Выбрать</button>
+        </div>
+
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/get-mpic/12140066/2a00000197ca7ab93a6078cb7ce3aa9e6b2c/orig" alt="Премиум пакет">
+            <h2>Премиум</h2>
+            <div class="price">от 500 000 ₽</div>
+            <p>Индивидуальная церемония, люксовый гроб, психолог, видео-трибьют.</p>
+            <button class="select-btn" onclick="alert('Выбран премиум пакет')">Выбрать</button>
+        </div>
+
+        <div class="plan">
+            <img src="https://avatars.mds.yandex.net/i?id=f38f8edef917f6dccb1604f8bf91828f_l-3703763-images-thumbs&n=13" alt="Элит пакет">
+            <h2>Элит</h2>
+            <div class="price">от 1 200 000 ₽</div>
+            <p>Закрытый зал, авторский гроб, живая музыка, банкет.</p>
+            <button class="select-btn" onclick="alert('Выбран элит-пакет')">Выбрать</button>
+        </div>
+    </div>
+
+    <div class="site-article">
+        <h2>О подборе пакета</h2>
+        <p>
+            Мы понимаем: выбор похоронного пакета — не просто финансовый расчёт, а проявление уважения, любви и памяти.
+            Поэтому каждый наш пакет составлен с учётом человеческих ценностей, чем больше цена тем массивнее букет и церемония. В стоимость входит вся церемония не только цветы
+        </p>
+        <p>
+            Даже в «Эконом»-варианте мы не экономим на уважении к усопшему — все процедуры выполняются с достоинством,
+            а документы оформляются в кратчайшие сроки, чтобы снять с вас дополнительную нагрузку.
+        </p>
+        <p>
+            Если ни один из предложенных пакетов не отражает ваших пожеланий — мы создадим индивидуальное предложение.
+            «Вечное Прощание» — не агентство, а проводник между мирами, и мы идём с вами до самого конца.
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('click', function(e) {
+            const flower = document.createElement('div');
+            flower.className = 'wilted-flower';
+            flower.innerHTML = '🥀';
+            flower.style.left = (e.pageX - 14) + 'px';
+            flower.style.top = (e.pageY - 14) + 'px';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 6000);
+        });
+    </script>
+
+    <script>
+        function spawnGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'wandering-ghost';
+            ghost.innerHTML = '🏮';
+
+            const side = Math.floor(Math.random() * 4);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            let startX, startY;
+
+            switch (side) {
+                case 0: startX = Math.random() * w; startY = -60; break;
+                case 1: startX = w + 60; startY = Math.random() * h; break;
+                case 2: startX = Math.random() * w; startY = h + 60; break;
+                case 3: startX = -60; startY = Math.random() * h; break;
+            }
+
+            ghost.style.left = `${startX}px`;
+            ghost.style.top = `${startY}px`;
+
+            const endX = (Math.random() - 0.5) * w * 2.5;
+            const endY = (Math.random() - 0.5) * h * 2.5;
+
+            ghost.style.setProperty('--tx', `${endX - startX}px`);
+            ghost.style.setProperty('--ty', `${endY - startY}px`);
+
+            const duration = 18 + Math.random() * 22;
+            ghost.style.setProperty('--duration', `${duration}s`);
+
+            document.body.appendChild(ghost);
+            setTimeout(() => ghost.remove(), duration * 1000);
+        }
+
+        setInterval(spawnGhost, 2000 + Math.random() * 3000);
+    </script>
+
+    <audio id="funeralMusic" preload="auto">
+        <source src="SHopen_-_Pokhoronnyjj_marsh_10529.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('funeralMusic');
+            audio.volume = 0.45;
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play().catch(() => {}), { once: true });
+            });
+        });
+    </script>
+
+</body>
+</html>
