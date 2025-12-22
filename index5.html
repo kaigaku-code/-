@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор гроба — Вечное Прощание</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriola:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gabriola', cursive;
+            color: #f0f0f0;
+            background: linear-gradient(135deg, #461010 30%, #000000 70%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 40px;
+        }
+
+        h1 {
+            font-size: 56px;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 28px;
+            line-height: 1.6;
+            color: #e0d0d0;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .coffins {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1600px;
+            margin: 0 auto 80px;
+        }
+
+        .coffin {
+            background: rgba(30, 15, 15, 0.75);
+            border: 2px solid #8B0000;
+            width: 400px;
+            padding: 22px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            /* --- ВЫРАВНИВАНИЕ КНОПОК --- */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 450px;
+        }
+
+        .coffin:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.45);
+            z-index: 10;
+            background: rgba(40, 20, 20, 0.9);
+        }
+
+        .coffin::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(139, 0, 0, 0.25), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .coffin:hover::before {
+            opacity: 1;
+        }
+
+        .coffin img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            filter: grayscale(20%) contrast(1) brightness(0.95);
+            transition: filter 0.3s;
+        }
+
+        .coffin:hover img {
+            filter: grayscale(0%) brightness(1.1);
+        }
+
+        .coffin h2 {
+            font-size: 30px;
+            margin: 12px 0 8px;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.5);
+        }
+
+        .coffin .material {
+            font-size: 22px;
+            color: #ffb347;
+            font-style: italic;
+            margin-bottom: 12px;
+            text-shadow: 0 0 5px rgba(255, 179, 71, 0.4);
+        }
+
+        .coffin p {
+            font-size: 20px;
+            color: #d0c0c0;
+            margin-bottom: 18px;
+            line-height: 1.45;
+            flex-grow: 1;
+        }
+
+        .select-btn {
+            background: #8B0000;
+            color: white;
+            border: 1px solid #fff;
+            padding: 10px 0;
+            font-family: 'Gabriola', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .select-btn:hover {
+            background: #a50000;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 179, 71, 0.5);
+        }
+
+        .wilted-flower {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: 9999;
+            animation: wiltedFall 6s ease-in forwards;
+            text-shadow: 0 0 6px rgba(139, 0, 0, 0.7);
+        }
+
+        @keyframes wiltedFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(500px) rotate(25deg) scale(0.85);
+                opacity: 0;
+            }
+        }
+
+        .wandering-ghost {
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-size: 32px;
+            opacity: 0;
+            color: rgba(253, 194, 0, 0.6);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+            pointer-events: none;
+            user-select: none;
+            z-index: 1000;
+            animation: ghostDrift var(--duration) linear forwards;
+        }
+
+        @keyframes ghostDrift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        .site-article {
+            margin: 80px auto 60px;
+            max-width: 1500px;
+            padding: 30px;
+            background: rgba(15, 15, 15, 0.6);
+            border-top: 1px solid #8B0000;
+            border-bottom: 1px solid #8B0000;
+            font-size: 36px;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+        }
+
+        .site-article h2 {
+            color: #dd3a3a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 41px;
+            font-family: 'Gabriola', cursive;
+        }
+
+        .site-article p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚰️ Выбор гроба</h1>
+    </header>
+
+    <div class="intro">
+        <p>Выберите гроб, от которого вам стало спокойнее. Каждый — как последнее объятие.</p>
+    </div>
+
+    <div class="coffins">
+        <div class="coffin">
+            <img src="https://avatars.mds.yandex.net/i?id=6b212185ce3ff6757a192d596ed2a7c57a22f8d3-5248605-images-thumbs&n=13" alt="Сосна">
+            <h2>Классическая сосна</h2>
+            <div class="material">Натуральная сосна</div>
+            <p>Простой, экологичный и скромный. Подходит для традиционных или «зелёных» похорон.</p>
+            <button class="select-btn" onclick="alert('Выбрана классическая сосна')">Выбрать</button>
+        </div>
+
+        <div class="coffin">
+            <img src="https://avatars.mds.yandex.net/i?id=3c59c6e4f5c29790e27f143e0e335175f257e96b-5300128-images-thumbs&n=13" alt="Дуб">
+            <h2>Дуб наследия</h2>
+            <div class="material">Массив дуба с атласной отделкой</div>
+            <p>Прочный и элегантный, с ручной резьбой и мягкой подкладкой внутри.</p>
+            <button class="select-btn" onclick="alert('Выбран дуб наследия')">Выбрать</button>
+        </div>
+
+        <div class="coffin">
+            <img src="https://static.tildacdn.com/tild6261-3633-4734-b264-663531353031/_.JPG" alt="Махагони">
+            <h2>Королевский махагони</h2>
+            <div class="material">Премиум махагони и бронзовая фурнитура</div>
+            <p>Роскошный, вечный и глубоко символичный. Включает вышивку и отделение для памятных вещей.</p>
+            <button class="select-btn" onclick="alert('Выбран королевский махагони')">Выбрать</button>
+        </div>
+
+        <div class="coffin">
+            <img src="https://avatars.mds.yandex.net/i?id=4a76790d483a894dd86be1fb15e4ff41_l-5344557-images-thumbs&n=13" alt="Берёза">
+            <h2>Берёза</h2>
+            <div class="material">Русская берёза</div>
+            <p>Лёгкий, светлый гроб с народным колоритом. Часто выбирают для православных похорон.</p>
+            <button class="select-btn" onclick="alert('Выбрана берёза')">Выбрать</button>
+        </div>
+
+        <div class="coffin">
+            <img src="https://avatars.mds.yandex.net/i?id=b1b82bc1d8e89d4b2c403d6f0ae4948670c25a49-5099198-images-thumbs&n=13" alt="Металл">
+            <h2>Металлический</h2>
+            <div class="material">Оцинкованная сталь</div>
+            <p>Долговечный и герметичный. Используется для захоронений в сложных климатических условиях.</p>
+            <button class="select-btn" onclick="alert('Выбран металлический гроб')">Выбрать</button>
+        </div>
+
+        <div class="coffin">
+            <img src="https://avatars.mds.yandex.net/i?id=93e29c671049f7ab776a53bea81214a4_l-4760093-images-thumbs&n=13" alt="Эко-гроб">
+            <h2>Эко-гроб</h2>
+            <div class="material">Картон и бамбук</div>
+            <p>100% биоразлагаемый. Подходит для кремации или захоронения на экокладбище.</p>
+            <button class="select-btn" onclick="alert('Выбран эко-гроб')">Выбрать</button>
+        </div>
+    </div>
+
+    <div class="site-article">
+        <h2>О выборе гроба</h2>
+        <p>
+            Гроб — не просто сосуд, а последний дом, в котором мы провожаем близкого. Мы подбираем его не по цене, а по смыслу.
+        </p>
+        <p>
+            Деревянные гробы дышат памятью поколений. Металлические — гарантируют покой на века. Эко-гробы возвращают тело земле, как лист осенью.
+        </p>
+        <p>
+            Если вы не нашли подходящий вариант — мы изготовим гроб по вашему эскизу. Даже с гравировкой имени, любимым стихом или узором, что был на детском одеяле.
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('click', function(e) {
+            const flower = document.createElement('div');
+            flower.className = 'wilted-flower';
+            flower.innerHTML = '🥀';
+            flower.style.left = (e.pageX - 14) + 'px';
+            flower.style.top = (e.pageY - 14) + 'px';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 6000);
+        });
+    </script>
+
+    <script>
+        function spawnGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'wandering-ghost';
+            ghost.innerHTML = '🏮';
+
+            const side = Math.floor(Math.random() * 4);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            let startX, startY;
+
+            switch (side) {
+                case 0: startX = Math.random() * w; startY = -60; break;
+                case 1: startX = w + 60; startY = Math.random() * h; break;
+                case 2: startX = Math.random() * w; startY = h + 60; break;
+                case 3: startX = -60; startY = Math.random() * h; break;
+            }
+
+            ghost.style.left = `${startX}px`;
+            ghost.style.top = `${startY}px`;
+
+            const endX = (Math.random() - 0.5) * w * 2.5;
+            const endY = (Math.random() - 0.5) * h * 2.5;
+
+            ghost.style.setProperty('--tx', `${endX - startX}px`);
+            ghost.style.setProperty('--ty', `${endY - startY}px`);
+
+            const duration = 18 + Math.random() * 22;
+            ghost.style.setProperty('--duration', `${duration}s`);
+
+            document.body.appendChild(ghost);
+            setTimeout(() => ghost.remove(), duration * 1000);
+        }
+
+        setInterval(spawnGhost, 2500 + Math.random() * 2500);
+    </script>
+
+    <audio id="funeralMusic" preload="auto">
+        <source src="SHopen_-_Pokhoronnyjj_marsh_10529.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('funeralMusic');
+            audio.volume = 0.45;
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play().catch(() => {}), { once: true });
+            });
+        });
+    </script>
+
+</body>
+</html>
